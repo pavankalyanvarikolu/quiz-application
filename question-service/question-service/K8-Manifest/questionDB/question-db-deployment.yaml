@@ -1,0 +1,34 @@
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: question-db
+   namespace: quiz-app-namespace
+ spec:
+   replicas: 1
+   selector:
+     matchLabels:
+       app: question-db
+   template:
+     metadata:
+       labels:
+         app: question-db
+     spec:
+       containers:
+       - name: question-db
+         image: postgres:latest
+         ports:
+         - containerPort: 5432
+         env:
+         - name: POSTGRES_DB
+           value: questiondb
+         - name: POSTGRES_USER
+           value: postgres
+         - name: POSTGRES_PASSWORD
+           value: "0000"
+         volumeMounts:
+         - mountPath: /var/lib/postgresql/data
+           name: postgres-data
+       volumes:
+       - name: postgres-data
+         emptyDir: {}
+
