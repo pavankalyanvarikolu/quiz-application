@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: question-deployment
+  namespace: quiz-app-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: question-deployment
+  template:
+    metadata:
+      labels:
+        app: question-deployment
+    spec:
+      containers:
+        - name: question-deployment
+          image: pavanvarikolu/question-service:latest
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: question-service-configmap
+                  key: SPRING_DATASOURCE_URL
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: question-service-configmap
+                  key: SPRING_DATASOURCE_USERNAME
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: question-service-secret
+                  key: SPRING_DATASOURCE_PASSWORD
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: question-service-configmap
+                  key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+              valueFrom:
+                configMapKeyRef:
+                  name: question-service-configmap
+                  key: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+            - name: EUREKA_CLIENT_FETCH_REGISTRY
+              valueFrom:
+                configMapKeyRef:
+                  name: question-service-configmap
+                  key: EUREKA_CLIENT_FETCH_REGISTRY
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: question-service-configmap
+                  key: SPRING_PROFILES_ACTIVE
+

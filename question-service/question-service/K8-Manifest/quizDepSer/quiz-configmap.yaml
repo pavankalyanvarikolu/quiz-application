@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quiz-service-configmap
+  namespace: quiz-app-namespace
+data:
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://quiz-db:5432/quizdb"
+  SPRING_DATASOURCE_USERNAME: "postgres"
+  EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://service-registry:8761/eureka/"
+  EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+  EUREKA_CLIENT_FETCH_REGISTRY: "true"
+  SPRING_PROFILES_ACTIVE: "docker"
+
