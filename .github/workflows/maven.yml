@@ -32,8 +32,8 @@ jobs:
 
       - name: Build ${{ matrix.service }}
         run: |
-         cd ${{ matrix.service }}/$matrix_service
-         ./mvn clean install
+         cd ${{ matrix.service }}/{{ matrix.service }}
+         ./mvnw clean install
 
   test:
     needs: build
