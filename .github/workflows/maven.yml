@@ -27,6 +27,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
+          distribution: 'temurin'  # You can use 'adopt', 'zulu', 'temurin', etc.
+          cache: maven  # Optional: to cache dependencies
 
       - name: Build ${{ matrix.service }}
         run: |
@@ -54,6 +56,8 @@ jobs:
           cd ${{ matrix.service }}/{{ matrix.service }}
           ./mvnw test
 
+  # Uncomment the following section for Docker build and push
+
   # docker-build-and-push:
   #   needs: test
   #   runs-on: ubuntu-latest
@@ -76,6 +80,8 @@ jobs:
   #     - name: Push Docker image to Docker Hub
   #       run: |
   #         docker push ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:latest
+
+  # Uncomment the following section for deployment
 
   # deploy:
   #   if: github.ref == 'refs/heads/main'
