@@ -58,7 +58,7 @@ jobs:
             sleep 3;
           done
         env:
-          PGPASSWORD: postgres
+          PGPASSWORD: 0000
 
   question-service-build:
     runs-on: ubuntu-latest
@@ -82,7 +82,7 @@ jobs:
               echo "PostgreSQL is not ready, retrying...";
             done
         env:
-          PGPASSWORD: postgres
+          PGPASSWORD: 0000
 
       - name: Build question-service
         run: |
