@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quiz-deployment
+  namespace: quiz-app-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quiz-deployment
+  template:
+    metadata:
+      labels:
+        app: quiz-deployment
+    spec:
+      containers:
+        - name: quiz-deployment
+          image: pavanvarikolu/quiz-service:latest
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: quiz-service-configmap
+                  key: SPRING_DATASOURCE_URL
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: quiz-service-configmap
+                  key: SPRING_DATASOURCE_USERNAME
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: quiz-service-secret
+                  key: SPRING_DATASOURCE_PASSWORD
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: quiz-service-configmap
+                  key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+              valueFrom:
+                configMapKeyRef:
+                  name: quiz-service-configmap
+                  key: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+            - name: EUREKA_CLIENT_FETCH_REGISTRY
+              valueFrom:
+                configMapKeyRef:
+                  name: quiz-service-configmap
+                  key: EUREKA_CLIENT_FETCH_REGISTRY
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: quiz-service-configmap
+                  key: SPRING_PROFILES_ACTIVE
+
