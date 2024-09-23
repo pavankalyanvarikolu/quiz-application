@@ -39,7 +39,7 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 0000
+          POSTGRES_PASSWORD: 0000  # Correct password
           POSTGRES_DB: questiondb
         ports:
           - 5432:5432
@@ -59,14 +59,15 @@ jobs:
             sleep 3;
           done
         env:
-          PGPASSWORD: 0000
+          PGPASSWORD: 0000  # Correct password
 
       - name: Verify Database Creation
         run: |
           echo "Checking if databases 'questiondb' and 'quizdb' are created..."
           PGPASSWORD=0000 psql -h localhost -U postgres -tc "SELECT datname FROM pg_database WHERE datname IN ('questiondb', 'quizdb');"
         env:
-          PGPASSWORD: 0000
+          PGPASSWORD: 0000  # Correct password
+
 
 
   question-service-build:
