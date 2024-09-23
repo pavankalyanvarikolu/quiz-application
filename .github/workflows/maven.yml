@@ -33,6 +33,7 @@ jobs:
       - name: Build ${{ matrix.service }}
         run: |
          cd ${{ matrix.service }}
+          chmod +x mvnw 
          ./mvnw clean install
 
 #  test:
