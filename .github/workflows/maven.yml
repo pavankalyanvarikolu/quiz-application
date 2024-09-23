@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [api-gateway, question-service, quiz-service, service-registry]
+        service: [ service-registry, question-service, quiz-service, api-gateway]
 
     steps:
       - name: Checkout code
