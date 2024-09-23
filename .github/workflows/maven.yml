@@ -74,6 +74,16 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Wait for PostgreSQL to be ready
+        run: |
+            echo "Waiting for PostgreSQL to be ready..."
+            for i in {1..10}; do
+              pg_isready -h localhost -U postgres && break || sleep 5;
+              echo "PostgreSQL is not ready, retrying...";
+            done
+        env:
+          PGPASSWORD: postgres
+
       - name: Build question-service
         run: |
           cd question-service
