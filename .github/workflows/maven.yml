@@ -53,9 +53,8 @@ jobs:
     steps:
       - name: Wait for PostgreSQL to be ready
         run: |
+          docker ps  # List running containers to confirm PostgreSQL is up
           until pg_isready -h localhost -U postgres; do
-            docker ps  # List running containers to confirm PostgreSQL is up
-            until pg_isready -h localhost -U postgres; do
             echo "Waiting for PostgreSQL to be ready...";
             sleep 3;
           done
@@ -64,10 +63,11 @@ jobs:
 
       - name: Verify Database Creation
         run: |
-            echo "Checking if databases 'questiondb' and 'quizdb' are created..."
-            PGPASSWORD=0000 psql -h localhost -U postgres -tc "SELECT datname FROM pg_database WHERE datname IN ('questiondb', 'quizdb');"
+          echo "Checking if databases 'questiondb' and 'quizdb' are created..."
+          PGPASSWORD=0000 psql -h localhost -U postgres -tc "SELECT datname FROM pg_database WHERE datname IN ('questiondb', 'quizdb');"
         env:
-          PGPASSWORD: postgres
+          PGPASSWORD: 0000
+
 
   question-service-build:
     runs-on: ubuntu-latest
